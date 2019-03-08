@@ -4,12 +4,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // FIREBASE MODULES
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 // MATERIAL MODULES
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+
+import { TriggerService } from './trigger.service';
 
 import { environment } from '../environments/environment';
 
@@ -22,13 +25,14 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng-lab'),
-    AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [{ provide: FirestoreSettingsToken, useValue: {} }, TriggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

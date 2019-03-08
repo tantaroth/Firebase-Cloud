@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/storage';
+
+import { TriggerService } from './trigger.service';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +10,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  private storageRef;
   dataForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private _trigger: TriggerService, private storage: AngularFireStorage) {
+    this.storageRef = storage.ref('upload');
+  }
 
   ngOnInit() {
     this.dataForm = this.formBuilder.group({
@@ -34,18 +40,35 @@ export class AppComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    const formData = new FormData();
     const value = this.dataForm.value;
-
-    formData.append('title', value.title);
-    formData.append('photo', value.photo);
+    const uuid = new Date().getTime() + '-' + Math.floor(Math.random() * 1000000000);
 
     // stop here if form is invalid
     if (this.dataForm.invalid) {
       return;
     }
 
-    console.log('SUCCESS!! :-)\n\n', this.dataForm.value, formData);
-    this.submitted = false;
+    console.log(value.photo);
+    this.storageRef.child(uuid + '/' + value.photo.name).put(value.photo).then(
+      data => {
+        this._trigger
+          .add({
+            uuid: uuid,
+            service: 'file',
+            task: 'upload',
+            params: {
+              title: value.title,
+              photo: data.metadata.fullPath
+            }
+          })
+          .then(() => {
+            this.submitted = false;
+          })
+          .catch((err) => {
+            console.error(err);
+            this.submitted = false;
+          });
+      }
+    );
   }
 }
