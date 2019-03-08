@@ -1,1 +1,59 @@
-<h2>Good!</h2>
+<div class="container">
+  <h1>Form</h1>
+
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="width-100-per">
+      <input type="text" matInput name="title" formControlName="title" placeholder="Title" />
+    </mat-form-field>
+
+    <p class="width-100-per">
+      <label for="photo">Photo</label> <br />
+      <input type="file" id="photo" name="photo" placeholder="Photo" (change)="onFileSelect($event)" />
+    </p>
+
+    <button mat-raised-button [disabled]="submitted" color="primary">Submit</button>
+  </form>
+  <h1>List</h1>
+  <ul>
+    <li>
+      <h2>Titulo</h2>
+      <img
+        src="https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
+        alt="Photo"
+        height="150"
+      />
+    </li>
+    <li>
+      <h2>Titulo</h2>
+      <img
+        src="https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
+        alt="Photo"
+        height="150"
+      />
+    </li>
+    <li>
+      <h2>Titulo</h2>
+      <img
+        src="https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
+        alt="Photo"
+        height="150"
+      />
+    </li>
+    <li>
+      <h2>Titulo</h2>
+      <img
+        src="https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
+        alt="Photo"
+        height="150"
+      />
+    </li>
+    <li>
+      <h2>Titulo</h2>
+      <img
+        src="https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
+        alt="Photo"
+        height="150"
+      />
+    </li>
+  </ul>
+</div>
