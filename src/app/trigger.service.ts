@@ -15,10 +15,13 @@ export interface Trigger {
 })
 export class TriggerService {
   private triggersCollection: AngularFirestoreCollection<Trigger>;
-  triggers: Observable<Trigger[]>;
 
   constructor(private afs: AngularFirestore) {
     this.triggersCollection = afs.collection<Trigger>('triggers');
+  }
+
+  list(): Observable<Trigger[]> {
+    return this.triggersCollection.valueChanges();
   }
 
   add(trigger: Trigger) {

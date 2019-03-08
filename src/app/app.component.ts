@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 
 import { TriggerService } from './trigger.service';
 
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
   private storageRef;
   dataForm: FormGroup;
   submitted = false;
+  triggers: Observable<any[]>;
 
   constructor(private formBuilder: FormBuilder, private _trigger: TriggerService, private storage: AngularFireStorage) {
     this.storageRef = storage.ref('upload');
@@ -23,6 +25,8 @@ export class AppComponent implements OnInit {
       title: [''],
       photo: ['', Validators.required]
     });
+
+    this.triggers = this._trigger.list();
   }
 
   // convenience getter for easy access to form fields
